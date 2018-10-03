@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Author: Dat Tran
-Email: dat.tranthanh@tut.fi, viebboy@gmail.com
+Author: Dat Tran, Alexandros Iosifidis
+Email: dat.tranthanh@tut.fi, viebboy@gmail.com, iosifidis.alekos@gmail.com
 github: https://github.com/viebboy
 """
 
@@ -16,8 +16,8 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="pygop",
     version=__version__,
-    author="Dat Tran",
-    author_email="viebboy@gmail.com",
+    author="Dat Tran, Alexandros Iosifidis",
+    author_email="viebboy@gmail.com, iosifidis.alekos@gmail.com",
     description="Python package that implements various algorithms using Generalized Operational Perceptron",
     long_description=long_description,
     long_description_content_type="text/markdown",
