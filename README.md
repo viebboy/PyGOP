@@ -7,9 +7,9 @@ What is Generalized Operational Perceptron?
 
 [Generalized Operational Perceptron](https://www.sciencedirect.com/science/article/pii/S0925231216312851) is an artificial neuron model that was proposed to replace the traditional McCulloch-Pitts neuron model. While standard perceptron model only performs a linear transformation followed by non-linear thresholding, GOP model encapsulates a diversity of both linear and non-linear operations (with traditional perceptron as a special case). Each GOP is characterized by learnable synaptic weights and an operator set comprising of 3 types of operations: nodal operation, pooling operation and activation operation. The 3 types of operations performed by a GOP loosely resemble the neuronal activities in a biological learning system of mammals in which each neuron conducts electrical signals over three distinct operations:
 
-    * Modification of input signal from the synapse connection in the Dendrites.
-    * Pooling operation of the modified input signals in the Soma.
-    * Sending pulses when the pooled potential exceeds a limit in the Axon hillock.
+* Modification of input signal from the synapse connection in the Dendrites.
+* Pooling operation of the modified input signals in the Soma.
+* Sending pulses when the pooled potential exceeds a limit in the Axon hillock.
 
 By defining a set of nodal operators, pooling operators and activation operators, each GOP can select the suitable operators based on the problem at hand. Thus learning a GOP-based network involves finding the suitable operators as well as updating the synaptic weights. The author of GOP proposed Progressive Operational Perceptron (POP) algorithm to progressively learn GOP-based networks. Later, [Heterogeneous Multilayer Generalized Operational Perceptron (HeMLGOP)](https://arxiv.org/pdf/1804.05093.pdf) algorithm and its variants (HoMLGOP, HeMLRN, HoMLRN) were proposed to learn heterogeneous architecture of GOPs with efficient operator set search procedure. In addition, fast version of POP [POPfast](https://arxiv.org/pdf/1808.06377.pdf) was proposed together with memory extensions [POPmemO](https://arxiv.org/pdf/1808.06377.pdf), [POPmemH](https://arxiv.org/pdf/1808.06377.pdf) that augment POPfast by incorporating memory path.
 
