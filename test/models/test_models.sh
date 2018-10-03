@@ -3,7 +3,7 @@
 
 
 model="hemlgop homlgop hemlrn homlrn pop popfast popmemo popmemh"
-version="py3"
+version="py2 py3"
 
 
 function test_local {
@@ -124,9 +124,11 @@ function test_cluster {
 
 if [ $# -eq 0 ]; then
     echo "usage test_models.sh [local/cluster] [cpu/gpu] [source]"
+    return 0
 fi
 if [ $# -eq 1 ]; then
     echo "usage test_models.sh [local/cluster] [cpu/gpu] [source]"
+    return 0
 fi
 
 # test on local machine
