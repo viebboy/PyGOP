@@ -6,4 +6,4 @@ Email: dat.tranthanh@tut.fi, viebboy@gmail.com
 github: https://github.com/viebboy
 """
 
-__version__ = '0.1.3'
+__version__ = '0.1.5'
