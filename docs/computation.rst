@@ -16,7 +16,7 @@ Computation Environments
     * *search_computation*: this key specifies the computation device during the operator set search procedure.
     * *finetune_computation*: this key specifies the computation device during the finetuning step.
 
-* *computation* is also an argument to :ref:`evaluate`, :ref:`predict`
+* *computation* is also an argument to :ref:`evaluate-function`, :ref:`predict-function`
 
 
 *Note 1: depending on the computation setup available, 'search_computation' must be carefully set. If only tensorflow-gpu is installed on the system but 'search_computation' is set to 'cpu' with K processes, the library will attempt to launch K different processes trying to use all GPUs without explicit device allocation, which can lead to out of memory situation*
