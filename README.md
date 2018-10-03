@@ -1,5 +1,15 @@
 # PyGOP: A Python library for Generalized Operational Perceptron (GOP) based algorithms
-This package implements progressive learning algorithms using [Generalized Operational Perceptron](https://www.sciencedirect.com/science/article/pii/S0925231216312851). This implementation includes the following algorithms: Progressive Operational Perceptron (POP); Heterogeneous Multilayer Generalized Operational Perceptron ([HeMLGOP](https://arxiv.org/abs/1804.05093)) and its variants; Fast Progressive Operational Perceptron ([POPfast](https://arxiv.org/abs/1808.06377)) and Progressive Operational Perceptron with Memory ([POPmemO](https://arxiv.org/abs/1808.06377), [POPmemH](https://arxiv.org/abs/1808.06377))
+[![Documentation Status](https://readthedocs.org/projects/pygop/badge/?version=latest)](http://pygop.readthedocs.io/en/latest/?badge=latest)
+
+This package implements progressive learning algorithms using [Generalized Operational Perceptron](https://www.sciencedirect.com/science/article/pii/S0925231216312851). PyGOP supports both single machine and cluster environment using CPU or GPU. This implementation includes the following algorithms:
+
+* Progressive Operational Perceptron ([POP](https://www.sciencedirect.com/science/article/pii/S0925231216312851))
+* Heterogeneous Multilayer Generalized Operational Perceptron ([HeMLGOP](https://arxiv.org/abs/1804.05093)) and its variants
+* Fast Progressive Operational Perceptron ([POPfast](https://arxiv.org/abs/1808.06377)) 
+* Progressive Operational Perceptron with Memory ([POPmemO](https://arxiv.org/abs/1808.06377), [POPmemH](https://arxiv.org/abs/1808.06377))
+
+
+
 
 What is Generalized Operational Perceptron?
 ===========================================
@@ -11,7 +21,7 @@ What is Generalized Operational Perceptron?
 * Pooling operation of the modified input signals in the Soma.
 * Sending pulses when the pooled potential exceeds a limit in the Axon hillock.
 
-By defining a set of nodal operators, pooling operators and activation operators, each GOP can select the suitable operators based on the problem at hand. Thus learning a GOP-based network involves finding the suitable operators as well as updating the synaptic weights. The author of GOP proposed Progressive Operational Perceptron (POP) algorithm to progressively learn GOP-based networks. Later, [Heterogeneous Multilayer Generalized Operational Perceptron (HeMLGOP)](https://arxiv.org/pdf/1804.05093.pdf) algorithm and its variants (HoMLGOP, HeMLRN, HoMLRN) were proposed to learn heterogeneous architecture of GOPs with efficient operator set search procedure. In addition, fast version of POP [POPfast](https://arxiv.org/pdf/1808.06377.pdf) was proposed together with memory extensions [POPmemO](https://arxiv.org/pdf/1808.06377.pdf), [POPmemH](https://arxiv.org/pdf/1808.06377.pdf) that augment POPfast by incorporating memory path.
+By defining a set of nodal operators, pooling operators and activation operators, each GOP can select the suitable operators based on the problem at hand. Thus learning a GOP-based network involves finding the suitable operators as well as updating the synaptic weights. The author of GOP proposed Progressive Operational Perceptron (POP) algorithm to progressively learn GOP-based networks. Later, [Heterogeneous Multilayer Generalized Operational Perceptron (HeMLGOP)](https://arxiv.org/pdf/1804.05093.pdf) algorithm and its variants (HoMLGOP, HeMLRN, HoMLRN) were proposed to learn heterogeneous architecture of GOPs with efficient operator set search procedure. In addition, fast version of POP, i.e., [POPfast](https://arxiv.org/pdf/1808.06377.pdf) was proposed together with memory extensions [POPmemO](https://arxiv.org/pdf/1808.06377.pdf), [POPmemH](https://arxiv.org/pdf/1808.06377.pdf) that augment POPfast by incorporating memory path.
 
 Installation
 ============
@@ -49,5 +59,14 @@ Documentation
 
 Full documentation can be found [here](https://pygop.readthedocs.io)
 
+
+Reference
+=========
+
+If you use one of the algorithms, please cite the corresponding articles:
+
+* S. Kiranyaz, T. Ince, A. Iosifidis and M. Gabbouj, "Progressive Operational Perceptron", Neurocomputing, vol 224, pp. 142-154, 2017.
+* D. T. Tran, S. Kiranyaz, M. Gabbouj and A. Iosifidis, "Heterogeneous Multilayer Generalized Operational Perceptron", arXiv preprint arXiv:1804.05093, 2018.
+* D. T. Tran, S. Kiranyaz, M. Gabbouj and A. Iosifidis, "Progressive Operational Perceptron with Memory", arXiv preprint arXiv:1808.06377, 2018.
 
 
