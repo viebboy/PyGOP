@@ -6,7 +6,7 @@
 Welcome to PyGOP's documentation!
 ==================================
 
-*PyGOP* provides a reference implementation of existing algorithms using Generalized Operational Perceptron (GOP) based on Keras and Tensorflow library. The implementation adopts a user-friendly interface while allowing a high level of customization including user-defined operators, custom loss function, custom metric functions that requires full batch evaluation such as precision, recall or f1. In addition, PyGOP supports different computation environments (CPU/GPU) for both single machine and cluster using SLURM job scheduler. 
+*PyGOP* provides a reference implementation of existing algorithms using Generalized Operational Perceptron (GOP) based on Keras and Tensorflow library. The implementation adopts a user-friendly interface while allowing a high level of customization including user-defined operators, custom loss function, custom metric functions that requires full batch evaluation such as precision, recall or f1. In addition, PyGOP supports different computation environments (CPU/GPU) for both single machine and cluster using SLURM job scheduler. What's more? Since training GOP-based algorithms might take days, PyGOP allows resuming to what has been learned in case the script got interfered in the middle during the progression!
 
 What is Generalized Operational Perceptron?
 ---------------------------------------------

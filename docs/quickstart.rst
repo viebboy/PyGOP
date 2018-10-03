@@ -113,4 +113,6 @@ For more discussion on data feeding mechanism, please refer :ref:`data`
 To deal with customization such as using custom loss, custom metrics or custom operators for nodal, pooling and activation, please refer :ref:`customization`
 
 
+**Finally, it's worth noting that in case the script got interfered before completing the progressive learning step, PyGOP allows resuming to what has been learned as long as the 'tmp_dir' and 'model_name' in params have not been modified**
+
 
