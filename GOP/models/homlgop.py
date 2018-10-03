@@ -183,8 +183,6 @@ class HoMLGOP(_Model):
                           verbose=False):
         
         
-        if verbose:
-            print('checking parameters')
         params = self.check_parameters(params)
 
         original_convergence_measure = params['convergence_measure']        
@@ -193,8 +191,6 @@ class HoMLGOP(_Model):
         else:
             params['convergence_measure'] = 'train_' + params['convergence_measure']
         
-        if verbose:
-            print('checking generators')
         
         misc.test_generator(train_func, train_data, params['input_dim'], params['output_dim'])
         if val_func:    misc.test_generator(val_func, val_data, params['input_dim'], params['output_dim'])
@@ -219,19 +215,13 @@ class HoMLGOP(_Model):
                         
                     if verbose:
                         print('-------------Layer %d ---------------Block %d ------------------' %(layer_iter, block_iter))
-                        print('topology')
-                        print(train_states['topology'])
-                        print('op_sets')
-                        print(train_states['op_set_indices'])
-                        print('weights')
-                        print(train_states['weights'].keys())
-                        print('layer iter in train_states ' + str(train_states['layer_iter']))
-                        print('block iter in train_states ' + str(train_states['block_iter']))
+                        
                         
                     if block_iter == 0:
                         if verbose:
                             print('##### Iterative Randomized Search #####')
-                        
+                            
+                            
                         if params['cluster']:
                             search_routine = gop_utils.search_cluster
                         else:
@@ -251,6 +241,7 @@ class HoMLGOP(_Model):
                                                                           test_data)
                     
                     else:
+                            
                         suffix = '_' + str(layer_iter) + '_' + str(block_iter-1)
                         block_op_set_idx = train_states['op_set_indices']['gop' + suffix]
                         block_weights = gop_utils.get_random_block_weights([train_states['weights']['gop'+suffix],
@@ -267,8 +258,6 @@ class HoMLGOP(_Model):
                     train_states['weights']['gop'+suffix], train_states['weights']['bn'+suffix], train_states['weights']['output'] = block_weights
                     
                     
-                    if verbose:
-                        print('##### Block finetuning ######')
                               
                     if CUDA_FLAG in os.environ.keys():
                         cuda_status = os.environ[CUDA_FLAG]
@@ -281,6 +270,8 @@ class HoMLGOP(_Model):
                         os.environ[CUDA_FLAG] = misc.get_gpu_str(params['finetune_computation'][1])
                        
                     try:
+                        if verbose:
+                            print('##### Block finetuning ######')
                         new_measure, history, train_states['weights'] = gop_utils.block_update(train_states['topology'], 
                                                                                               train_states['op_set_indices'], 
                                                                                               train_states['weights'], 
@@ -304,6 +295,9 @@ class HoMLGOP(_Model):
                         del os.environ[CUDA_FLAG]
                     else:
                         os.environ[CUDA_FLAG] = cuda_status
+                        
+                    if verbose:
+                        self.print_performance(history, params['convergence_measure'], params['direction'])
                     
                     if block_iter > 0:
                         if misc.check_convergence(new_measure, train_states['measure'][layer_iter][block_iter-1], params['direction'], params['block_threshold']):

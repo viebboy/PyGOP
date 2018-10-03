@@ -1706,6 +1706,7 @@ def finetune(model_data,
         for metric in performance.keys():
             if performance[metric] is not None:
                 performance[metric] = history[metric][idx]
+                
         
     params['convergence_measure'] = original_convergence_measure
     

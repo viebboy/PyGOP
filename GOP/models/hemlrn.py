@@ -181,8 +181,6 @@ class HeMLRN(_Model):
                           verbose=False):
     
         
-        if verbose:
-            print('checking parameters')
         params = self.check_parameters(params)
 
         original_convergence_measure = params['convergence_measure']        
@@ -190,9 +188,6 @@ class HeMLRN(_Model):
             params['convergence_measure'] = 'val_' + params['convergence_measure'] 
         else:
             params['convergence_measure'] = 'train_' + params['convergence_measure']
-        
-        if verbose:
-            print('checking generators')
         
         misc.test_generator(train_func, train_data, params['input_dim'], params['output_dim'])
         if val_func:    misc.test_generator(val_func, val_data, params['input_dim'], params['output_dim'])
@@ -217,16 +212,6 @@ class HeMLRN(_Model):
                         
                     if verbose:
                         print('-------------Layer %d ---------------Block %d ------------------' %(layer_iter, block_iter))
-                        print('topology')
-                        print(train_states['topology'])
-                        print('op_sets')
-                        print(train_states['op_set_indices'])
-                        print('weights')
-                        print(train_states['weights'].keys())
-                        print('layer iter in train_states ' + str(train_states['layer_iter']))
-                        print('block iter in train_states ' + str(train_states['block_iter']))
-                        
-                    if verbose:
                         print('##### Iterative Randomized Search #####')
                         
                     if params['cluster']:
@@ -245,6 +230,9 @@ class HeMLRN(_Model):
                                                                               val_data,
                                                                               test_func,
                                                                               test_data)
+                    
+                    if verbose:
+                        self.print_performance(history, params['convergence_measure'], params['direction'])
                         
                     
                     # block_weights[gop, bn, output]

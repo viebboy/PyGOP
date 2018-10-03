@@ -10,7 +10,7 @@ Abstract base model for all progressive learning models
 from __future__ import print_function
 
 from ..utility import misc, gop_utils
-import os, dill
+import os, dill, numpy as np
 dill.settings['recurse'] = True
     
 CUDA_FLAG = 'CUDA_VISIBLE_DEVICES'
@@ -68,9 +68,6 @@ class _Model:
                  test_data=None,
                  verbose=False):
 
-        
-        if verbose:
-            print('--------------Finetuning-----------------------------------')
             
         params = self.check_parameters(params)
         
@@ -106,6 +103,15 @@ class _Model:
             del os.environ[CUDA_FLAG]
         else:
             os.environ[CUDA_FLAG] = cuda_status
+            
+        if val_func:
+            convergence_measure = 'val_' + params['convergence_measure'] 
+        else:
+            convergence_measure = 'train_' + params['convergence_measure']
+            
+        if verbose:
+            self.print_performance(history, convergence_measure, params['direction'])
+            
         
         return history, performance
         
@@ -180,3 +186,11 @@ class _Model:
             os.environ[CUDA_FLAG] = cuda_status
         
         return pred
+    
+    def print_performance(self, history, convergence_measure, direction):
+        idx = np.argmin(history[convergence_measure]) if direction == 'lower' else np.argax(history[convergence_measure])
+        
+        for metric in history.keys():
+            print('%s: %.4f' % (metric, history[metric][idx]))
+            
+        return

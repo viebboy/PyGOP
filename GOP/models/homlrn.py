@@ -184,8 +184,6 @@ class HoMLRN(_Model):
                           verbose=False):
     
         
-        if verbose:
-            print('checking parameters')
         params = self.check_parameters(params)
 
         original_convergence_measure = params['convergence_measure']        
@@ -194,8 +192,6 @@ class HoMLRN(_Model):
         else:
             params['convergence_measure'] = 'train_' + params['convergence_measure']
         
-        if verbose:
-            print('checking generators')
         
         misc.test_generator(train_func, train_data, params['input_dim'], params['output_dim'])
         if val_func:    misc.test_generator(val_func, val_data, params['input_dim'], params['output_dim'])
@@ -219,14 +215,6 @@ class HoMLRN(_Model):
                         
                     if verbose:
                         print('-------------Layer %d ---------------Block %d ------------------' %(layer_iter, block_iter))
-                        print('topology')
-                        print(train_states['topology'])
-                        print('op_sets')
-                        print(train_states['op_set_indices'])
-                        print('weights')
-                        print(train_states['weights'].keys())
-                        print('layer iter in train_states ' + str(train_states['layer_iter']))
-                        print('block iter in train_states ' + str(train_states['block_iter']))
                         
                     if block_iter == 0:
                         
@@ -251,6 +239,10 @@ class HoMLRN(_Model):
                                                                                   test_data)
                     
                     else:
+                        if verbose:
+                            print('##### Solving Least Square Problem #####')
+                            
+                            
                         suffix = '_' + str(layer_iter) + '_' + str(block_iter-1)
                         block_op_set_idx = train_states['op_set_indices']['gop'+suffix]
                         
@@ -282,7 +274,9 @@ class HoMLRN(_Model):
                         else:
                             os.environ[CUDA_FLAG] = cuda_status
                         
-                        
+                    
+                    if verbose:
+                        self.print_performance(history, params['convergence_measure'], params['direction'])
                     
                     # block_weights[gop, bn, output]
                     suffix = '_' + str(layer_iter) + '_' + str(block_iter)

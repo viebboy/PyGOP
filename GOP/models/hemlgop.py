@@ -181,9 +181,7 @@ class HeMLGOP(_Model):
                           test_data=None,
                           verbose=False):
     
-        
-        if verbose:
-            print('checking parameters')
+    
         params = self.check_parameters(params)
 
         original_convergence_measure = params['convergence_measure']        
@@ -192,8 +190,6 @@ class HeMLGOP(_Model):
         else:
             params['convergence_measure'] = 'train_' + params['convergence_measure']
         
-        if verbose:
-            print('checking generators')
         
         misc.test_generator(train_func, train_data, params['input_dim'], params['output_dim'])
         if val_func:    misc.test_generator(val_func, val_data, params['input_dim'], params['output_dim'])
@@ -218,16 +214,6 @@ class HeMLGOP(_Model):
                         
                     if verbose:
                         print('-------------Layer %d ---------------Block %d ------------------' %(layer_iter, block_iter))
-                        print('topology')
-                        print(train_states['topology'])
-                        print('op_sets')
-                        print(train_states['op_set_indices'])
-                        print('weights')
-                        print(train_states['weights'].keys())
-                        print('layer iter in train_states ' + str(train_states['layer_iter']))
-                        print('block iter in train_states ' + str(train_states['block_iter']))
-                        
-                    if verbose:
                         print('##### Iterative Randomized Search #####')
                         
                     if params['cluster']:
@@ -294,6 +280,10 @@ class HeMLGOP(_Model):
                         del os.environ[CUDA_FLAG]
                     else:
                         os.environ[CUDA_FLAG] = cuda_status
+                        
+                    if verbose:
+                        self.print_performance(history, params['convergence_measure'], params['direction'])
+                        
                     
                     if block_iter > 0:
                         if misc.check_convergence(new_measure, train_states['measure'][layer_iter][block_iter-1], params['direction'], params['block_threshold']):

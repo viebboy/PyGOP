@@ -179,9 +179,6 @@ class POPfast(_Model):
                           test_data=None,
                           verbose=False):
     
-        
-        if verbose:
-            print('checking parameters')
         params = self.check_parameters(params)
 
         original_convergence_measure = params['convergence_measure']        
@@ -190,8 +187,6 @@ class POPfast(_Model):
         else:
             params['convergence_measure'] = 'train_' + params['convergence_measure']
         
-        if verbose:
-            print('checking generators')
         
         misc.test_generator(train_func, train_data, params['input_dim'], params['output_dim'])
         if val_func:    misc.test_generator(val_func, val_data, params['input_dim'], params['output_dim'])
@@ -211,13 +206,6 @@ class POPfast(_Model):
                         
                 if verbose:
                     print('-------------Layer %d ------------------' %layer_iter)
-                    print('topology')
-                    print(train_states['topology'])
-                    print('op_sets')
-                    print(train_states['op_set_indices'])
-                    print('weights')
-                    print(train_states['weights'].keys())
-                    print('layer iter in train_states ' + str(train_states['layer_iter']))
                         
                 if verbose:
                     print('##### Iterative Search #####')
@@ -238,6 +226,9 @@ class POPfast(_Model):
                                                                                           val_data,
                                                                                           test_func,
                                                                                           test_data)
+                
+                if verbose:
+                    self.print_performance(history, params['convergence_measure'], params['direction'])
                     
                     
                 train_states['measure'][layer_iter].append(block_performance[params['convergence_measure']])

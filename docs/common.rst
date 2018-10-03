@@ -28,6 +28,7 @@ Parameters are given to a model through a dictionary **params**. While different
 * **search_computation**: Tuple with 1st element indicating computation devices during the search procedure. 1st element should be either 'cpu' or 'gpu'. If using 'gpu' then 2nd element should be a list(int) of gpu devices, default ('cpu',). See :ref:`computation` for detail description.
 * **finetune_computation**: Tuple with 1st element indicating computation devices during the finetune procedure. 1st element should be either 'cpu' or 'gpu'. If using 'gpu' then 2nd element should be a list(int) of gpu devices, default ('cpu',). See :ref:`computation` for detail description.
 * **use_bias**: Bool indicates whether to use bias in the weights, default True
+* **output_activation**: String indicates optional activation function (supported by Keras) for output layer, default None.
 * **input_dropout**: Float indicates dropout percentage applied to input layer during Back Propagation, default None.
 * **dropout**: Float indicates dropout percentage applied to hidden layers during Back Propagation in progressive learning step, default None.
 * **dropout_finetune**: Float indicates dropout percentage applied to hidden layers during Back Propagation in finetuning step, default None.
