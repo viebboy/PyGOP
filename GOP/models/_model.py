@@ -195,5 +195,5 @@ class _Model:
                 print('%s: %.4f' % (metric, history[metric][idx]))
         else:
             for metric in history.keys():
-                print('%s: %.4f' % (metric, history[metric][idx]))
+                print('%s: %.4f' % (metric, history[metric]))
         return
