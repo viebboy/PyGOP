@@ -189,7 +189,7 @@ class _Model:
     
     def print_performance(self, history, convergence_measure, direction):
         if isinstance(history[convergence_measure], list):
-            idx = np.argmin(history[convergence_measure]) if direction == 'lower' else np.argax(history[convergence_measure])
+            idx = np.argmin(history[convergence_measure]) if direction == 'lower' else np.argmax(history[convergence_measure])
         
             for metric in history.keys():
                 print('%s: %.4f' % (metric, history[metric][idx]))
