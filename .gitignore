@@ -1,0 +1,15 @@
+*.txt
+!LICENSE.txt
+!requirement.txt
+./test
+!./test/models/test_models.py
+!./test/models/test_utility.py
+!./test/models/test_models.sh
+!./test/utility
+*.pyc
+*.pyo
+*.bak
+_*
+*.pickle
+!__init__.py
+!_model.py

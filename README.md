@@ -1,0 +1,2 @@
+# PyGOP: A Python library for Generalized Operational Perceptron (GOP) based algorithms
+This package implements progressive learning algorithms using Generalized Operational Perceptron originally proposed in [x]. This implementation includes the following algorithms: Progressive Operational Perceptron (POP); Heterogeneous Multilayer Generalized Operational Perceptron (HeMLGOP) and its variants; Fast Progressive Operational Perceptron (POPfast) and Progressive Operational Perceptron with Memory (POPmemO, POPmemH) 
