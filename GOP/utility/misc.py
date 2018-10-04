@@ -959,8 +959,8 @@ def check_model_parameters(params, default_params):
     if params['special_metrics'] is not None:
         assert isinstance(params['special_metrics'], (list, tuple)), 'special_metrics should be given as a list/tuple of callable'
     
-    for metric in params['special_metrics']:
-        assert callable(metric), 'special_metrics should be a list/tuple of callable'
+        for metric in params['special_metrics']:
+            assert callable(metric), 'special_metrics should be a list/tuple of callable'
         
     # correct the metric names if abbreviation is used
     if 'mse' in params['metrics']:
