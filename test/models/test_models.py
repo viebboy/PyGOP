@@ -210,7 +210,8 @@ def test_general_case(classifier, option, version, cluster_name):
     model = Model()
     params = model.get_default_parameters()  
     params, test_dir, data_dir = setup_parameters(params, classifier, option, version, cluster_name)
-        
+    params['special_metrics'] = None
+    
     x_train, y_train, x_val, y_val, x_test, y_test = load_data(data_dir)
     
     performance, p_history, f_history = model.fit(params,
@@ -221,6 +222,19 @@ def test_general_case(classifier, option, version, cluster_name):
                                                   data_loading_func,
                                                   [x_test, y_test],
                                                   True)
+
+    params['convergence_measure'] = 'acc'
+    params['metrics'] = ['acc',]
+    params['direction'] = 'higher'    
+    performance, p_history, f_history = model.fit(params,
+                                                  data_loading_func,
+                                                  [x_train, y_train],
+                                                  data_loading_func,
+                                                  [x_val, y_val],
+                                                  data_loading_func,
+                                                  [x_test, y_test],
+                                                  True)
+
     
     test_performance1 = model.evaluate(data_loading_func, 
                                        [x_test, y_test],
