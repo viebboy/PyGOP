@@ -192,8 +192,10 @@ class _Model:
             idx = np.argmin(history[convergence_measure]) if direction == 'lower' else np.argmax(history[convergence_measure])
         
             for metric in history.keys():
-                print('%s: %.4f' % (metric, history[metric][idx]))
+                if history[metric] is not None:
+                    print('%s: %.4f' % (metric, history[metric][idx]))
         else:
             for metric in history.keys():
-                print('%s: %.4f' % (metric, history[metric]))
+                if history[metric] is not None:
+                    print('%s: %.4f' % (metric, history[metric]))
         return

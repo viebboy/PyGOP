@@ -826,7 +826,8 @@ def GIS_(params,
     block_performance = {}
     
     for metric in history.keys():
-        block_performance[metric] = history[metric][idx]
+        if history[metric] is not None:
+            block_performance[metric] = history[metric][idx]
         
     
     return block_performance, block_weights, op_set_idx, history
@@ -975,7 +976,8 @@ def GISfast_(params,
     block_performance = {}
     
     for metric in history.keys():
-        block_performance[metric] = history[metric][idx]
+        if history[metric] is not None:
+            block_performance[metric] = history[metric][idx]
         
     
     return block_performance, block_weights, op_set_idx, history
