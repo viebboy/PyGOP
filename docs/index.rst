@@ -45,9 +45,10 @@ Documentation Overview
    :maxdepth: 3
    :caption: Contents:
 
+   changelog
    installation
    quickstart
-   example
+   examples
    common
    data
    computation

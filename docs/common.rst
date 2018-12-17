@@ -42,7 +42,7 @@ Parameters are given to a model through a dictionary **params**. While different
 * **lr_finetune**: List of learning rates values in a schedule, default [0.0005,]
 * **epoch_finetune**: List of number of epochs for each learning rate value in **lr_train**, default [2,]
 * **cluster**: Bool indicates if using SLURM cluster to compute. See :ref:`cluster-computation` for details using computation on a cluster.
-
+* **class_weight**: Dict containing the weights given to each class in the loss function, default None. This allows weighing loss values from different classes
 Refer :ref:`customization` when custom loss, custom metrics or operators
 
 
