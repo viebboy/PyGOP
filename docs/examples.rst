@@ -18,7 +18,7 @@ The examples directory includes the following files:
 
     * `data_utility.py <https://github.com/viebboy/PyGOP/blob/master/examples/data_utility.py>`_: this script includes the data loading functionalities.
 
-    * `train_miniCelebA.py <>https://github.com/viebboy/PyGOP/blob/master/examples/train_miniCelebA.py`_: the training script used for all algorithms.
+    * `train_miniCelebA.py <https://github.com/viebboy/PyGOP/blob/master/examples/train_miniCelebA.py>`_: the training script used for all algorithms.
 
 
 To run this example, it suffices to just download `miniCelebA_deepfeatures.tar.gz <https://drive.google.com/open?id=1njcxMypmE2n8VczvFWPMBG--rFpf0vsw>`_ and extract it to the same folder as `train_miniCelebA.py <https://github.com/viebboy/PyGOP/blob/master/examples/train_miniCelebA.py>`_ and `data_utility.py <https://github.com/viebboy/PyGOP/blob/master/examples/data_utility.py>`_.
