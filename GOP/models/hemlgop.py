@@ -130,6 +130,7 @@ class HeMLGOP(_Model):
         params['search_computation'] = ('cpu', 8)
         params['finetune_computation'] = ('cpu', 8)
         params['use_bias'] = True
+        params['class_weight'] = None
         
         return  params
     
@@ -256,19 +257,18 @@ class HeMLGOP(_Model):
                         os.environ[CUDA_FLAG] = ''
                     else:
                         os.environ[CUDA_FLAG] = misc.get_gpu_str(params['finetune_computation'][1])
+
                         
                     try:
-                        new_measure, history, train_states['weights'] = gop_utils.block_update(train_states['topology'], 
-                                                                                              train_states['op_set_indices'], 
-                                                                                              train_states['weights'], 
-                                                                                              params, 
-                                                                                              block_names, 
-                                                                                              train_func,
-                                                                                              train_data,
-                                                                                              val_func,
-                                                                                              val_data,
-                                                                                              test_func,
-                                                                                              test_data)
+                        new_measure, history, train_states['weights'] = gop_utils.block_update_standalone(train_states, 
+                                                                                                          params, 
+                                                                                                          block_names, 
+                                                                                                          train_func,
+                                                                                                          train_data,
+                                                                                                          val_func,
+                                                                                                          val_data,
+                                                                                                          test_func,
+                                                                                                          test_data)
                     except:
                         if cuda_status is None:
                             del os.environ[CUDA_FLAG]

@@ -131,7 +131,8 @@ class HoMLGOP(_Model):
         params['search_computation'] = ('cpu', 8)
         params['finetune_computation'] = ('cpu', 8)
         params['use_bias'] = True
-        
+        params['class_weight'] = None
+
         return  params
     
     def fit(self, 

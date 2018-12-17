@@ -60,7 +60,7 @@ def get_random_gop_weight(input_dim,
     W = np.random.uniform(-2*np.pi, 2*np.pi, (1, input_dim, output_dim)).astype('float32') 
     
     if use_bias:
-        bias = np.zeros((output_dim,), dtype=np.float32)
+        bias = np.random.uniform(-2*np.pi, 2*np.pi, (output_dim,)).astype('float32')
         weight = [W, bias]
     else:
         weight = [W,]
@@ -82,10 +82,10 @@ def get_random_block_weights(prev_block):
     gop_output = prev_gop[0].shape[2]
     gop = get_random_gop_weight(gop_input, gop_output, True if len(prev_gop)==2 else False)
     
-    bn = [np.ones((gop_output,), dtype=np.float32), 
-          np.zeros((gop_output,), dtype=np.float32), 
-          np.zeros((gop_output,), dtype=np.float32),
-          np.ones((gop_output,), dtype=np.float32)]
+    bn = [np.ones((gop_output,), dtype=np.float64), 
+          np.zeros((gop_output,), dtype=np.float64), 
+          np.zeros((gop_output,), dtype=np.float64),
+          np.ones((gop_output,), dtype=np.float64)]
     
     hidden_dim, output_dim = prev_output[0].shape
     
@@ -97,6 +97,62 @@ def get_random_block_weights(prev_block):
         output.append(prev_output[1])
         
     return gop, bn, output
+
+
+def calculate_memory_block_standalone(params,
+                           train_states,
+                           train_func,
+                           train_data,
+                           val_func,
+                           val_data,
+                           test_func,
+                           test_data):
+    
+    """Standalone function to alculate memory block for POPmemH and POPmemO model
+    
+    Args:
+        params (dict): Model parameters given as dictionary
+        train_states (dict): Current topology configuration
+        train_func (function): Function to generate train generator and train steps
+        train_data: Input to train_func
+        val_func (function): Function to generate validation generator and validation steps
+        val_data: Input to val_func
+        test_func (function): Function to generate test generator and test steps
+        test_data: Input to test_func
+        
+    Returns:
+        List of numpy arrays of memory block weights
+    """
+
+    misc.dump_data(params,
+               train_states,
+               train_func,
+               train_data,
+               val_func,
+               val_data,
+               test_func,
+               test_data)
+    
+    runnable = 'calculate_memory.py'
+    
+    path = os.path.join(params['tmp_dir'], params['model_name'])
+    filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), runnable)
+    cmd = 'memory_block_path=%s python %s' %(path, filename)
+    p = subprocess.Popen(cmd, shell=True)
+
+    p.wait()
+
+    if not os.path.exists(os.path.join(path, 'memory_block_finish.txt')):
+        raise Exception('Calculate memory block finished without results!')
+
+    with open(os.path.join(path, 'memory_block.pickle'),'rb') as fid:
+        result = pickle.load(fid)
+
+    removed_files = glob.glob(os.path.join(path, 'memory_block*'))
+    misc.remove_files(removed_files)
+    
+    return result['pre_bn_weight'], result['projection'], result['post_bn_weight']
+
 
 def calculate_memory_block(params,
                            train_states,
@@ -184,7 +240,7 @@ def PCA(params, train_states, train_func, train_data):
         hidden_model = Model(inputs=model.input, outputs=model.get_layer(hidden_layer_name).output)
         
     if params['direct_computation']:
-        x = np.zeros((1, input_dim), dtype=np.float32)
+        x = np.zeros((1, input_dim), dtype=np.float64)
         
         for _ in range(steps):
             x_, _ = next(gen)
@@ -240,15 +296,15 @@ def PCA(params, train_states, train_func, train_data):
         idx = idx +1
     
     projection = [U[:,:idx],] 
-    pre_bn_weight = [np.ones((x_mean.size,), dtype=np.float32), 
-                     np.zeros((x_mean.size,), dtype=np.float32), 
+    pre_bn_weight = [np.ones((x_mean.size,), dtype=np.float64), 
+                     np.zeros((x_mean.size,), dtype=np.float64), 
                      x_mean.flatten(), 
                      x_var.flatten()]
     
-    bn_weight = [np.ones((idx,), dtype=np.float32), 
-                 np.zeros((idx,), dtype=np.float32), 
-                 np.zeros((idx,), dtype=np.float32), 
-                 np.ones((idx,), dtype=np.float32)]
+    bn_weight = [np.ones((idx,), dtype=np.float64), 
+                 np.zeros((idx,), dtype=np.float64), 
+                 np.zeros((idx,), dtype=np.float64), 
+                 np.ones((idx,), dtype=np.float64)]
     
     if params['use_bias']:
         projection.append(np.zeros((idx,), dtype='float32'))
@@ -305,8 +361,8 @@ def LDA(params, train_states, train_func, train_data):
         hidden_model = Model(inputs=model.input, outputs=model.get_layer(hidden_layer_name).output)
         
     if params['direct_computation']:
-        x = np.zeros((1, input_dim), dtype=np.float32)
-        y = np.zeros((1, output_dim), dtype=np.float32) 
+        x = np.zeros((1, input_dim), dtype=np.float64)
+        y = np.zeros((1, output_dim), dtype=np.float64) 
         
         for _ in range(steps):
             x_, y_ = next(gen)
@@ -324,8 +380,8 @@ def LDA(params, train_states, train_func, train_data):
         
         x = (x - x_mean)/(np.sqrt(x_var + epsilon))
         
-        Sb = np.zeros((x.shape[-1], x.shape[-1]), dtype=np.float32)
-        Sw = np.zeros((x.shape[-1], x.shape[-1]), dtype=np.float32)
+        Sb = np.zeros((x.shape[-1], x.shape[-1]), dtype=np.float64)
+        Sw = np.zeros((x.shape[-1], x.shape[-1]), dtype=np.float64)
         
         for c in range(output_dim):
             class_indices = np.where(y == c)[0]
@@ -356,7 +412,7 @@ def LDA(params, train_states, train_func, train_data):
                     class_means[c] += np.sum(x_[class_indices], axis=0, keepdims=True) / 1e5
                     class_pop[c] += len(class_indices)
             
-        Sb = np.zeros((x_mean.size, x_mean.size), dtype=np.float32)
+        Sb = np.zeros((x_mean.size, x_mean.size), dtype=np.float64)
         
         for c in range(output_dim):
             class_means[c] = class_means[c]*1e5 / float(class_pop[c])
@@ -372,7 +428,7 @@ def LDA(params, train_states, train_func, train_data):
             x_var += np.sum((x_ - x_mean)**2, axis=0, keepdims=True) / float(np.sum(class_pop))
             
         
-        Sw = np.zeros((x_mean.size, x_mean.size), dtype=np.float32)
+        Sw = np.zeros((x_mean.size, x_mean.size), dtype=np.float64)
         
         for _ in range(steps):
             x_, y_ = next(gen)
@@ -393,15 +449,15 @@ def LDA(params, train_states, train_func, train_data):
     U,S,V = np.linalg.svd(np.dot(np.linalg.inv(Sw), Sb))
     
     projection = [U[:,:output_dim -1],] 
-    pre_bn_weight = [np.ones((x_mean.size,), dtype=np.float32), 
-                     np.zeros((x_mean.size,), dtype=np.float32), 
+    pre_bn_weight = [np.ones((x_mean.size,), dtype=np.float64), 
+                     np.zeros((x_mean.size,), dtype=np.float64), 
                      x_mean.flatten(), 
                      x_var.flatten()]
     
-    bn_weight = [np.ones((output_dim-1,), dtype=np.float32), 
-                 np.zeros((output_dim-1,), dtype=np.float32), 
-                 np.zeros((output_dim-1,), dtype=np.float32), 
-                 np.ones((output_dim-1,), dtype=np.float32)]
+    bn_weight = [np.ones((output_dim-1,), dtype=np.float64), 
+                 np.zeros((output_dim-1,), dtype=np.float64), 
+                 np.zeros((output_dim-1,), dtype=np.float64), 
+                 np.ones((output_dim-1,), dtype=np.float64)]
     
     if params['use_bias']:
         projection.append(np.zeros((output_dim-1,), dtype='float32'))
@@ -796,10 +852,10 @@ def GIS_(params,
     block_size = params['max_topology'][layer_iter]
     
     weights['gop' + suffix] = get_random_gop_weight(prev_hidden_dim, block_size, params['use_bias'])
-    weights['bn' + suffix] = [np.ones((block_size,), dtype=np.float32),
-                              np.zeros((block_size,), dtype=np.float32),
-                              np.zeros((block_size,), dtype=np.float32),
-                              np.ones((block_size,), dtype=np.float32),]
+    weights['bn' + suffix] = [np.ones((block_size,), dtype=np.float64),
+                              np.zeros((block_size,), dtype=np.float64),
+                              np.zeros((block_size,), dtype=np.float64),
+                              np.ones((block_size,), dtype=np.float64),]
     weights['output'] = get_random_gop_weight(params['max_topology'][layer_iter], params['output_dim'], params['use_bias'])        
     
     block_names = ['gop'+suffix, 'bn'+suffix, 'output']
@@ -938,16 +994,16 @@ def GISfast_(params,
     weights = copy.deepcopy(train_states['weights'])
     gop_weight = [he_init(prev_hidden_dim, block_size, (1, prev_hidden_dim, block_size)),]
     
-    bn_weight = [np.ones((block_size,), dtype=np.float32), 
-                 np.zeros((block_size,), dtype=np.float32), 
-                 np.zeros((block_size,), dtype=np.float32),
-                 np.ones((block_size,), dtype=np.float32)]
+    bn_weight = [np.ones((block_size,), dtype=np.float64), 
+                 np.zeros((block_size,), dtype=np.float64), 
+                 np.zeros((block_size,), dtype=np.float64),
+                 np.ones((block_size,), dtype=np.float64)]
     
     output_weight = [he_init(hidden_dim, output_dim, [hidden_dim, output_dim])]
     
     if params['use_bias']:
-        gop_weight.append(np.zeros((block_size,), dtype=np.float32))
-        output_weight.append(np.zeros((output_dim,), dtype=np.float32))
+        gop_weight.append(np.zeros((block_size,), dtype=np.float64))
+        output_weight.append(np.zeros((output_dim,), dtype=np.float64))
         
     weights['gop' + block_suffix] = gop_weight
     weights['bn' + block_suffix] = bn_weight
@@ -1023,6 +1079,7 @@ def IRS(start_idx,
     performance, weights, op_set_idx, history = get_optimal_op_set(search_results, params['convergence_measure'], params['direction'])
     
     return performance, weights, op_set_idx, history
+
 
 
 def LS(params, 
@@ -1134,7 +1191,8 @@ def LS(params,
                                             params['direct_computation'], 
                                             params['least_square_regularizer'], 
                                             use_bias,
-                                            K.epsilon())
+                                            K.epsilon(),
+                                            params['class_weight'])
     
     
     model.get_layer('bn' + block_suffix).set_weights(bn_weight)
@@ -1169,7 +1227,8 @@ def least_square(model,
                  direct_computation, 
                  regularizer, 
                  use_bias,
-                 epsilon):
+                 epsilon,
+                 class_weight=None):
     """Auxiliary function of LS to solve least-square problem
     
     Args:
@@ -1184,6 +1243,7 @@ def least_square(model,
         regularizer (float): Regularization of least-square problem
         use_bias (bool): append bias if True
         epsilon (float): small amount added to denominator to avoid zero division
+        class_weight (dict): weights to rebalance the contribution of each class to the loss function
         
     Returns:
         bn_weight (list): weights of BN layer in the block
@@ -1192,8 +1252,8 @@ def least_square(model,
     """
     
     if direct_computation:
-        x = np.zeros((1, input_dim), dtype=np.float32)
-        y = np.zeros((1, output_dim), dtype=np.float32)
+        x = np.zeros((1, input_dim), dtype=np.float64)
+        y = np.zeros((1, output_dim), dtype=np.float64)
         
         for _ in range(steps):
             x_, y_ = next(gen)
@@ -1210,9 +1270,19 @@ def least_square(model,
         x_var[:,:hidden_dim-block_size] = 1.0 - epsilon
         
         x = (x - x_mean)/(np.sqrt(x_var + epsilon))
+        
+        if class_weight is not None:
+            weight = np.zeros((x.shape[0],1))
+            for key in class_weight.keys():
+                indices = np.where(y==key)[0]
+                weight[indices] = class_weight[key]
+            
+            x = x*weight
+            y = y*weight
+        
         xTx = np.dot(x.T, x)
         xTy = np.dot(x.T, y)
-        W = np.dot(np.linalg.pinv(xTx + regularizer*np.eye(hidden_dim, hidden_dim, dtype=np.float32)), xTy)
+        W = np.dot(np.linalg.pinv(xTx + regularizer*np.eye(hidden_dim, hidden_dim, dtype=np.float64)), xTy)
         
         
     else:
@@ -1242,21 +1312,31 @@ def least_square(model,
             x_, y_ = next(gen)
             x_ = model.predict(x_)
             x_ = (x_ - x_mean)/(np.sqrt(x_var + epsilon))
+            
+            if class_weight is not None:
+                weight = np.zeros((x_.shape[0],1))
+                for key in class_weight.keys():
+                    indices = np.where(y_==key)[0]
+                    weight[indices] = class_weight[key]
+                
+                x_ = x_*weight
+                y_ = y_*weight
+                
             xTx += np.dot(x_.T, x_)
             xTy += np.dot(x_.T, y_)
     
-        W = np.dot(np.linalg.pinv(xTx + regularizer*np.eye(hidden_dim, hidden_dim, dtype=np.float32)), xTy)
+        W = np.dot(np.linalg.pinv(xTx + regularizer*np.eye(hidden_dim, hidden_dim, dtype=np.float64)), xTy)
         
     
     
     if use_bias:
-        output_weight = [W, np.zeros((output_dim,), dtype=np.float32)]
+        output_weight = [W, np.zeros((output_dim,), dtype=np.float64)]
     else:
         output_weight = [W,]
         
     
-    bn_weight = [np.ones((block_size,), dtype=np.float32), 
-                 np.zeros((block_size,), dtype=np.float32), 
+    bn_weight = [np.ones((block_size,), dtype=np.float64), 
+                 np.zeros((block_size,), dtype=np.float64), 
                  x_mean.flatten()[hidden_dim-block_size:], 
                  x_var.flatten()[hidden_dim-block_size:]]
     
@@ -1264,6 +1344,49 @@ def least_square(model,
     
     return bn_weight, output_weight
 
+
+def block_update_standalone(train_states,
+                            params,
+                            block_names,
+                            train_func,
+                            train_data,
+                            val_func,
+                            val_data,
+                            test_func,
+                            test_data):
+    
+    train_states['block_names'] = block_names
+    
+    misc.dump_data(params,
+               train_states,
+               train_func,
+               train_data,
+               val_func,
+               val_data,
+               test_func,
+               test_data)
+    
+    runnable = 'block_update.py'
+    
+    path = os.path.join(params['tmp_dir'], params['model_name'])
+    filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), runnable)
+    cmd = 'block_update_path=%s python %s' %(path, filename)
+    p = subprocess.Popen(cmd, shell=True)
+    
+    p.wait()
+    
+    if not os.path.exists(os.path.join(path, 'block_update_finish.txt')):
+        raise Exception('Block update finished without results!')
+    
+    with open(os.path.join(path, 'block_update_output.pickle'),'rb') as fid:
+        result = pickle.load(fid)
+        
+    removed_files = glob.glob(os.path.join(path, 'block_update*'))
+    misc.remove_files(removed_files)
+    
+    return result['measure'], result['history'], result['weights']
+    
+    
 def block_update(topology, 
                  op_set_indices, 
                  weights, 
@@ -1333,7 +1456,8 @@ def block_update(topology,
                                                     val_func,
                                                     val_data,
                                                     test_func,
-                                                    test_data)
+                                                    test_data,
+                                                    params['class_weight'])
                                     
     # get block weights
     model.set_weights(new_weights)
@@ -1345,7 +1469,6 @@ def block_update(topology,
     del K
     
     return measure, history, weights
-    
     
     
 def network_builder(topology,
@@ -1450,6 +1573,7 @@ def network_builder(topology,
     model = Model(inputs=inputs, outputs=outputs)
 
     return model
+
         
 
 def network_trainer(model,
@@ -1466,7 +1590,9 @@ def network_trainer(model,
                     val_func,
                     val_data,
                     test_func,
-                    test_data):
+                    test_data,
+                    class_weight):
+    
     """Train the given model with given parameters
     
     Args:
@@ -1485,6 +1611,7 @@ def network_trainer(model,
         val_data: Input to val_func
         test_func (function): Function to return test generator and #mini-batches
         test_data: Input to test_func
+        class_weight: (dict) Weight assigned to each class to rebalance the contribution of each class to the loss
         
     Returns:
         measure: The value of convergence_measure
@@ -1547,7 +1674,8 @@ def network_trainer(model,
                             verbose=0,
                             callbacks=[cb,],
                             validation_data=val_gen,
-                            validation_steps=val_steps)
+                            validation_steps=val_steps,
+                            class_weight=class_weight)
         
         if sign*(cb.measure - measure) > 0:
             optimal_weights = cb.model_weights
@@ -1693,7 +1821,8 @@ def finetune(model_data,
                                                 val_func, 
                                                 val_data, 
                                                 test_func, 
-                                                test_data)
+                                                test_data,
+                                                params['class_weight'])
     
     sign = 1.0 if params['direction']=='higher' else -1.0
     

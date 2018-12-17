@@ -53,6 +53,8 @@ def main(argv):
         search_routine = gop_utils.GISfast
     elif train_states['model'] == 'POP':
         search_routine = gop_utils.GIS
+    else:
+        raise Exception('The given model "%s" is not supported by the operator set search procedure' % train_states['model'])
     
     performance, weights, op_set_idx, history = search_routine(start_idx,
                                                             stop_idx,

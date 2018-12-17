@@ -133,6 +133,7 @@ class POPmemH(_Model):
         params['finetune_computation'] = ('cpu', 8)
         params['use_bias'] = True
         params['direct_computation'] = False
+        params['class_weight'] = None
         
         return  params
     
@@ -282,10 +283,14 @@ class POPmemH(_Model):
                 if verbose:
                     print('##### Calculating memory block ########')
                     
-                pre_bn_weight, projection, post_bn_weight = gop_utils.calculate_memory_block(params,
-                                                                                              train_states,
-                                                                                              train_func,
-                                                                                              train_data)
+                pre_bn_weight, projection, post_bn_weight = gop_utils.calculate_memory_block_standalone(params,
+                                                                                                        train_states,
+                                                                                                        train_func,
+                                                                                                        train_data,
+                                                                                                        val_func,
+                                                                                                        val_data,
+                                                                                                        test_func,
+                                                                                                        test_data)
                 train_states['topology'].pop()
                 train_states['topology'].append([])
                 train_states['topology'].append(('dense', params['output_dim']))

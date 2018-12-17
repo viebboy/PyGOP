@@ -902,6 +902,7 @@ def check_model_parameters(params, default_params):
     assert 'model_name' in keys, 'This model requires a unique name in temporary directory (tmp_dir), please specify in "model_name"'
     assert os.access(params['tmp_dir'], os.W_OK), 'The given temporarary directory "%s" does not have write permission ' % params['tmp_dir']
     
+    
     if not os.path.exists(os.path.join(params['tmp_dir'], params['model_name'])):
         os.mkdir(os.path.join(params['tmp_dir'], params['model_name']))
         
@@ -973,7 +974,7 @@ def check_model_parameters(params, default_params):
         params['metrics'][params['metrics'].index('accuracy')] = 'acc'
     
     if params['convergence_measure'] == 'accuracy':
-        params['convergence_measure'] == 'acc'
+        params['convergence_measure'] = 'acc'
 
     
     if 'mae' in params['metrics']:

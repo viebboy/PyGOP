@@ -22,19 +22,23 @@ By defining a set of nodal operators, pooling operators and activation operators
 Documentation Overview
 ----------------------
 
-* :ref:`installation` gives instruction on how to install PyGOP through pip or source
+* :ref:`changelog` documents major changes between versions.
 
-* :ref:`quickstart` gives a brief introduction how to use PyGOP interface
+* :ref:`installation` gives instruction on how to install PyGOP through pip or source.
 
-* :ref:`common-interface` is dedicated to common parameters and interface shared by all algorithms
+* :ref:`quickstart` gives a brief introduction on how to use PyGOP interface.
 
-* :ref:`data` gives instruction on the data feeding mechanism of PyGOP
+* :ref:`examples` gives instruction on how to run our complete example code on a subset of CelebA dataset.
+
+* :ref:`common-interface` is dedicated to common parameters and interface shared by all algorithms.
+
+* :ref:`data` gives instruction on the data feeding mechanism of PyGOP.
 
 * :ref:`computation` discusses how to setup parameters related to computation devices and computation environment such as single machine or cluster.
 
-* :ref:`algorithms` gives brief description of each algorithm and algorithm-specific parameters
+* :ref:`algorithms` gives brief description of each algorithm and algorithm-specific parameters.
 
-* :ref:`customization` details how to define custom loss, metrics or operators 
+* :ref:`customization` details how to define custom loss, metrics or operators.
  
 
 .. toctree::
@@ -43,6 +47,7 @@ Documentation Overview
 
    installation
    quickstart
+   example
    common
    data
    computation
