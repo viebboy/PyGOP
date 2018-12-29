@@ -20,10 +20,7 @@ if not module_path in sys.path:
 from GOP.utility import gop_utils, misc
 
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+import pickle
 
 def main(argv):
             

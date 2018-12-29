@@ -14,10 +14,7 @@ from __future__ import print_function
 from ..utility import misc, gop_utils, gop_operators
 from ._model import _Model
 import shutil, os, copy
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+import pickle
     
 
     
@@ -167,6 +164,9 @@ class HeMLRN(_Model):
                                                test_data,
                                                verbose)
         
+        if os.path.exists(os.path.join(params['tmp_dir'], params['model_name'])):
+            shutil.rmtree(os.path.join(params['tmp_dir'], params['model_name']))
+        
         return performance, p_history, f_history
         
         
@@ -299,8 +299,7 @@ class HeMLRN(_Model):
             with open(path, 'wb') as fid:
                 pickle.dump(train_states, fid)             
             
-            if os.path.exists(os.path.join(params['tmp_dir'], params['model_name'])):
-                shutil.rmtree(os.path.join(params['tmp_dir'], params['model_name']))
+            
             
 
         model_data = {'model': self.model_name,

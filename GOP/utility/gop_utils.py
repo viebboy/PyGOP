@@ -12,10 +12,7 @@ from . import gop_operators, misc
 import os, glob, dill, copy, subprocess, time, numpy as np
 dill.settings['recurse'] = True
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+import pickle
     
 CUDA_FLAG = 'CUDA_VISIBLE_DEVICES'
     

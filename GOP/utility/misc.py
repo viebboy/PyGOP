@@ -13,10 +13,7 @@ from __future__ import print_function
 
 import os, sys, dill, inspect, copy, numpy as np
 dill.settings['recurse'] = True
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+import pickle
     
 from keras import backend as K
 from keras.callbacks import Callback as Callback
@@ -174,7 +171,7 @@ def initialize_states(parameters, model):
         file_path = os.path.join(path, 'train_states.pickle')
         
         if os.path.exists(file_path):
-            fid = open(file_path, 'r')
+            fid = open(file_path, 'rb')
             train_states = pickle.load(fid)
             fid.close()
             
