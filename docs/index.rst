@@ -22,38 +22,43 @@ By defining a set of nodal operators, pooling operators and activation operators
 Documentation Overview
 ----------------------
 
-* :ref:`changelog` documents major changes between versions.
-
 * :ref:`installation` gives instruction on how to install PyGOP through pip or source.
 
 * :ref:`quickstart` gives a brief introduction on how to use PyGOP interface.
 
-* :ref:`examples` gives instruction on how to run our complete example code on a subset of CelebA dataset.
-
-* :ref:`common-interface` is dedicated to common parameters and interface shared by all algorithms.
+* :ref:`examples` gives illustrative examples on CelebA and Mnist dataset with complete code.
 
 * :ref:`data` gives instruction on the data feeding mechanism of PyGOP.
+
+* :ref:`common-interface` is dedicated to common parameters and interface shared by all algorithms.
 
 * :ref:`computation` discusses how to setup parameters related to computation devices and computation environment such as single machine or cluster.
 
 * :ref:`algorithms` gives brief description of each algorithm and algorithm-specific parameters.
 
 * :ref:`customization` details how to define custom loss, metrics or operators.
- 
+
+* :ref:`changelog` documents major changes between versions. 
+
+* :ref:`contributing` gives instructions on how to contribute to PyGOP.
+
+* :ref:`license` details license statement.
+
 
 .. toctree::
    :maxdepth: 3
    :caption: Contents:
 
-   changelog
    installation
    quickstart
    examples
-   common
    data
+   common
    computation
    algorithms
    customization
-
+   changelog
+   contributing
+   license
 
 

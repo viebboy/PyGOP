@@ -36,7 +36,8 @@ Parameters are given to a model through a dictionary **params**. While different
 * **weight_regularizer_finetune**: Float weight decay coefficient used during Back Propagation in finetuning step, default None
 * **weight_constraint**: Float max-norm constraint value used during Back Propagation in progressive learning step, default None
 * **weight_constraint_finetune**: Float max-norm constraint value used during Back Propagation in finetuning step, default None
-* **optimizer**: String indicates the name of the optimizers implemented by Keras
+* **optimizer**: String indicates the name of the optimizers implemented by Keras, default 'adam'
+* **optimizer_parameters**: A dictionary to supply non-default parameters for the optimizer, default to None which means using default parameters of Keras optimizer
 * **lr_train**: List of learning rates values in a schedule, default [0.01, 0.001, 0.0001]
 * **epoch_train**: List of number of epochs for each learning rate value in **lr_train**, default [2,2,2]
 * **lr_finetune**: List of learning rates values in a schedule, default [0.0005,]

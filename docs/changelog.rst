@@ -6,6 +6,26 @@ Change Log
 
 All notable changes to PyGOP will be documented here.
 
+[0.2.2] 2019-04-24
+==================
+
+Added
+-----
+
+- Test Suite: unit test, PEP8 verification
+- Continuous Integration (Travis)
+- Mnist Example
+- Instructions on Contributions
+- Improved Documentation
+- requirements.txt
+- Functionality to specify optimizer's parameters
+
+Fixed
+-----
+
+- learning rate update in utility/gop_utils.network_trainer()
+- improve coding style according to PEP8
+
 
 [0.2.1] 2018-12-29
 ==================

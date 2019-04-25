@@ -11,8 +11,8 @@ from GOP.version import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-    
-    
+
+
 setuptools.setup(
     name="pygop",
     version=__version__,
@@ -24,14 +24,14 @@ setuptools.setup(
     url="https://github.com/viebboy/PyGOP",
     license='LICENSE.txt',
     packages=setuptools.find_packages(),
-    classifiers=['Operating System :: POSIX',],
-    install_requires = ['python_version>= "2.7"' or 'python_version >= "3.4"',
+    classifiers=['Operating System :: POSIX', ],
+    install_requires=['python_version >= "2.7"' or 'python_version >= "3.4"',
                       'numpy >= 1.13',
                       'dill >= 0.2.6',
                       'joblib >= 0.11',
                       'keras >= 2.2.1'],
-    setup_requires = ['numpy >= 1.13',
-                      'dill >= 0.2.6',
-                      'joblib >= 0.11',
-                      'keras >= 2.2.1']
+    setup_requires=['numpy >= 1.13',
+                    'dill >= 0.2.6',
+                    'joblib >= 0.11',
+                    'keras >= 2.2.1']
 )

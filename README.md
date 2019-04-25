@@ -1,5 +1,6 @@
 # PyGOP: A Python library for Generalized Operational Perceptron (GOP) based algorithms
 [![Documentation Status](https://readthedocs.org/projects/pygop/badge/?version=latest)](http://pygop.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.com/viebboy/pygop_private.svg?token=Vyp5yZziwm6raKns9TtS&branch=master)](https://travis-ci.com/viebboy/PyGOP)
 
 This package implements progressive learning algorithms using [Generalized Operational Perceptron](https://www.sciencedirect.com/science/article/pii/S0925231216312851). PyGOP supports both single machine and cluster environment using CPU or GPU. This implementation includes the following algorithms:
 
@@ -42,7 +43,7 @@ To install PyGOP with required dependencies::
 
     pip install pygop
 
-At the moment, PyGOP only supports Linux with both python 2 and python 3 (tested on Python 2.7 and Python 3.5)
+At the moment, PyGOP only supports Linux with both python 2 and python 3 (tested on Python 2.7 and Python 3.4, 3.5, 3.6, 3.7 with tensorflow for cpu)
 
 Installation from source
 ------------------------
