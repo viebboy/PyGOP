@@ -6,6 +6,8 @@ Illustrative Examples
 
 In this section, we illustrate a complete usage of all algorithms through a hand-written digits recognition task and a face recognition task.
 
+.. _mnist-example:
+
 Hand-written Digits Recognition with Mnist dataset
 =================================================
 
@@ -170,6 +172,7 @@ In order to run the script using :ref:`hemlgop-model` algorithm, for example, wi
 This will train the model with 8 parallel threads on cpu. The number of cpu threads or the gpu devices can be set within *train_mnist.py*
 
 
+.. _mini-celebA-example:
 
 Face Recognition with CelebA dataset
 ====================================
