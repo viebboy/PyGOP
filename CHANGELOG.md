@@ -7,7 +7,7 @@ All notable changes to PyGOP will be documented here.
 ### Added
 
 - Test Suite: unit test, PEP8 verification
-- Continuous Integration (Travis)
+- Continuous Integration (Travis CI)
 - Mnist Example
 - Instructions on Contributions
 - Improved Documentation

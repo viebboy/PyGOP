@@ -2,6 +2,7 @@
 [![Documentation Status](https://readthedocs.org/projects/pygop/badge/?version=latest)](http://pygop.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://travis-ci.com/viebboy/pygop_private.svg?token=Vyp5yZziwm6raKns9TtS&branch=master)](https://travis-ci.com/viebboy/PyGOP)
 
+
 This package implements progressive learning algorithms using [Generalized Operational Perceptron](https://www.sciencedirect.com/science/article/pii/S0925231216312851). PyGOP supports both single machine and cluster environment using CPU or GPU. This implementation includes the following algorithms:
 
 * Progressive Operational Perceptron ([POP](https://www.sciencedirect.com/science/article/pii/S0925231216312851))
