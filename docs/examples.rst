@@ -9,7 +9,7 @@ In this section, we illustrate a complete usage of all algorithms through a hand
 .. _mnist-example:
 
 Hand-written Digits Recognition with Mnist dataset
-=================================================
+===================================================
 
 The complete example is available from `https://github.com/viebboy/PyGOP/tree/master/examples/train_mnist.py <https://github.com/viebboy/PyGOP/tree/master/examples/train_mnist.py>`_ . 'train_mnist.py' is the only source code we need, beside having PyGOP installed
 
