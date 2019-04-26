@@ -62,7 +62,7 @@ The following parameters are specific to HeMLGOP that should be set in **params*
 .. _homlgop-model:
 
 `Homogeneous Multilayer Operational Perceptron (HoMLGOP) <https://arxiv.org/pdf/1804.05093.pdf>`_
-===================================================================================================
+======================================================================================================
 
 Description
 -----------

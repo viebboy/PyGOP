@@ -44,7 +44,6 @@ Parameters are given to a model through a dictionary **params**. While different
 * **epoch_finetune**: List of number of epochs for each learning rate value in **lr_train**, default [2,]
 * **cluster**: Bool indicates if using SLURM cluster to compute. See :ref:`cluster-computation` for details using computation on a cluster.
 * **class_weight**: Dict containing the weights given to each class in the loss function, default None. This allows weighing loss values from different classes
-
 Refer :ref:`customization` when custom loss, custom metrics or operators
 
 
@@ -82,7 +81,7 @@ Returns:
 .. _progressivelearn-function:
 
 progressive_learn
-==================
+==============
 .. code-block:: python
 
     progressive_learn(params, train_func, train_data, val_func=None, val_data=None, test_func=None, test_data=None, verbose=False)

@@ -60,7 +60,7 @@ author = u'Dat Thanh Tran'
 # built documents.
 #
 # The short X.Y version.
-version = u'0.2.2'
+version = u'0.2'
 # The full version, including alpha/beta/rc tags.
 release = u'0.2.2'
 
@@ -74,7 +74,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
