@@ -39,7 +39,7 @@ def main(argv):
 
     if computation == 'cpu':
         search_computation = ('cpu', 8)
-        finetune_computation = ('cpu', )
+        finetune_computation = ('cpu', 1)
     else:
         search_computation = ('gpu', [0, 1, 2, 3])
         finetune_computation = ('gpu', [0, 1, 2, 3])
