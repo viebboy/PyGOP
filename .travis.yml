@@ -11,7 +11,7 @@ matrix:
       dist: xenial
       sudo: true
 install:
-  - pip install tensorflow
+  - pip install tensorflow==1.14
   - pip install -r requirements.txt
   - pip install .
   - pip install flake8
