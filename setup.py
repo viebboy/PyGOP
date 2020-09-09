@@ -25,7 +25,7 @@ setuptools.setup(
     license='LICENSE.txt',
     packages=setuptools.find_packages(),
     classifiers=['Operating System :: POSIX', ],
-    install_requires=['python_version >= "2.7"' or 'python_version >= "3.4"',
+    install_requires=['python_version >= "2.7"' or 'python_version >= "3.5"',
                       'numpy >= 1.13',
                       'dill >= 0.2.6',
                       'joblib >= 0.11',
