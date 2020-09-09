@@ -30,20 +30,20 @@ Installation
 PyPi installation
 -----------------
 
-Tensorflow is required before installing PyGOP.
+Tensorflow version 1 is required before installing PyGOP. We suggest installing tensorflow 1.14.0 
 To install tensorflow CPU version through *pip*::
 
-    pip install tensorflow
+    pip install tensorflow==1.14.0
 
 Or the GPU version::
 
-    pip install tensorflow-gpu
+    pip install tensorflow-gpu==1.14.0
 
 To install PyGOP with required dependencies::
 
     pip install pygop
 
-At the moment, PyGOP only supports Linux with both python 2 and python 3 (tested on Python 2.7 and Python 3.4, 3.5, 3.6, 3.7 with tensorflow for cpu)
+At the moment, PyGOP only supports Linux with python 2 and python 3 (tested on Python 2.7 and Python 3.5, 3.6, 3.7 with tensorflow for cpu)
 
 Installation from source
 ------------------------
@@ -67,7 +67,7 @@ Reference
 If you use one of the algorithms, please cite the corresponding articles:
 
 * S. Kiranyaz, T. Ince, A. Iosifidis and M. Gabbouj, "Progressive Operational Perceptron", Neurocomputing, vol 224, pp. 142-154, 2017.
-* D. T. Tran, S. Kiranyaz, M. Gabbouj and A. Iosifidis, "Heterogeneous Multilayer Generalized Operational Perceptron", arXiv preprint arXiv:1804.05093, 2018.
-* D. T. Tran, S. Kiranyaz, M. Gabbouj and A. Iosifidis, "Progressive Operational Perceptron with Memory", arXiv preprint arXiv:1808.06377, 2018.
+* D. T. Tran, S. Kiranyaz, M. Gabbouj and A. Iosifidis, "Heterogeneous Multilayer Generalized Operational Perceptron", IEEE Transactions on Neural Networks and Learning Systems, 2018.
+* D. T. Tran, S. Kiranyaz, M. Gabbouj and A. Iosifidis, "Progressive Operational Perceptron with Memory", Neurocomputing, 2019.
 
 
