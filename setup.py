@@ -29,9 +29,9 @@ setuptools.setup(
                       'numpy >= 1.13',
                       'dill >= 0.2.6',
                       'joblib >= 0.11',
-                      'keras >= 2.2.1'],
+                      'keras == 2.2.4'],
     setup_requires=['numpy >= 1.13',
                     'dill >= 0.2.6',
                     'joblib >= 0.11',
-                    'keras >= 2.2.1']
+                    'keras == 2.2.4']
 )

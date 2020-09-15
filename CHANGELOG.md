@@ -2,6 +2,15 @@
 
 All notable changes to PyGOP will be documented here.
 
+## [0.2.3] 2020-09-15
+
+### Added
+- recommendation to install tensorflow 1.14.0
+
+### Fixed
+- fixing keras version to 2.2.4 in the requirement and setup
+
+
 ## [0.2.2] 2019-04-24
 
 ### Added
